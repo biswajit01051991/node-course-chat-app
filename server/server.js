@@ -3,7 +3,7 @@ const http=require('http');
 const express=require('express');
 const publicPath=path.join(__dirname,'../public');
 const socketIO=require('socket.io');
-const {generateMessage}=require('./utils/message');
+const {generateMessage,generateLocationMessage}=require('./utils/message');
 
 
 var app=express();
@@ -25,13 +25,12 @@ io.on('connection',(socket)=>{
 	
 	socket.on('createMessage',(message,callback)=>{
 		console.log('createmessage',message);
-		//io.emit('newMessage',{
-		//from:message.from,
-		//text:message.text,
-		//createAt:new Date().getTime()
-		//});
 		io.emit('newMessage',generateMessage(message.from,message.text ));
 		callback('This is from the server.');
+	});
+	
+	socket.on('createLocationMessage',(coords)=>{
+		io.emit('newLocationMessage',generateLocationMessage('Admin',coords.latitude, coords.longitude));
 	});
 	socket.on('disconnect',()=>{
 	console.log('User was disconnected');
