@@ -20,11 +20,32 @@ if(scrollTop + clientHeight + newMessageHeight+lastMessageHeight >= scrollHeight
 }
 }
 socket.on('connect',function(){
-console.log('connect to server');
+//console.log('connect to server');
+var params=$.deparam(window.location.search);
+socket.emit('join',params,function(err){
+	if(err){
+		window.location.href='/';
+		alert(err);
+		
+	}else{
+		console.log('No error');
+	}
+});
 });
 
 socket.on('disconnect',function(){
 console.log('Disconnected from server');
+});
+
+socket.on('updateUserList',function(users){
+	//console.log('User list',users);
+	
+	var ol=$('<ol></ol>');
+   users.forEach(function(user){
+	   ol.append($('<li></li>').text(user));
+   });
+   
+   $('#users').html(ol);
 });
 
 socket.on('newMessage',function(message){
