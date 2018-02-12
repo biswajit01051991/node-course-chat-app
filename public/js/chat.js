@@ -10,8 +10,8 @@ function scrollToBottom(){
 	var scrollHeight=messages.prop('scrollHeight');
 	var newMessageHeight=newMessage.innerHeight();
 	var lastMessageHeight=newMessage.prev().innerHeight();
-	console.log(lastMessageHeight);
-	console.log(newMessageHeight);
+	//console.log(lastMessageHeight);
+	//console.log(newMessageHeight);
 	//console.log(clientHeight);
 	
 if(scrollTop + clientHeight + newMessageHeight+lastMessageHeight >= scrollHeight){
@@ -101,7 +101,7 @@ jQuery('#message-form').on('submit',function(e){
 	
 	var messageTextbox=$('[name=message]');
 	socket.emit('createMessage',{
-	from:'User',
+	//from:'User',
 	text:messageTextbox.val()
 },function(){
 	messageTextbox.val('');
